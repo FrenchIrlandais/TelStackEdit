@@ -1,0 +1,4 @@
+# Exclude everything in the folder ssl but the folder itself with .gitignore
+*
+*/
+!.gitignore
