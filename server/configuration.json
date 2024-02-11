@@ -1,0 +1,14 @@
+{
+  "repositories": [{
+      "uid": "defaultworkspace",
+      "name": "DefaultWorkspace",
+      "description": "Workspace par défaut",
+      "icon": "google-photos",
+      "chdir": ["..", "..", "..", "default"],
+      "ignore": [".git"],
+      "requested": ["md"],
+      "passwordHash": 1179400178,
+      "securityLevel": "MEDIUM"
+    }
+  ]
+}
