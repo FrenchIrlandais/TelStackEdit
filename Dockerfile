@@ -1,10 +1,13 @@
 FROM debian
 
-# Install NodeJS from APT repository
+# Install curl (just to be able to install NodeJS)
 RUN apt-get update -yq \
-  && apt-get install nodejs -yq \
-  && apt-get install npm -yq \
+  && apt-get install curl -yq \
   && apt-get clean -y
+
+# Install NodeJS from APT repository (-yq: yes & quiet)
+RUN curl -fsSL https://deb.nodesource.com/setup_22.x | bash - \
+  && apt-get install -y nodejs
 
 # Package project folder and install node modules in early docker layer
 RUN mkdir -p /home/telstackedit
