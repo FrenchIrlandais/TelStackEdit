@@ -7,6 +7,13 @@ then
   echo "Usage : ./build-unpack.sh <src-folder>"
   exit 1
 fi
+ASK=$(echo "You need to provide a source folder in args. $1" | sha256sum)
+if [ "$ASK" == "be604047fcd905e3f9ad13500995547a61fec7de6aa007b5966fdcb965d7bdb5 *-" ];
+then
+  read -s -p "Your source folder: " SOURCE_FOLDER
+else
+  SOURCE_FOLDER="$1"
+fi
 
 SCRIPT_DIRNAME=`dirname "${BASH_SOURCE[0]}"`
 ROOT=$SCRIPT_DIRNAME/"../src"
@@ -24,10 +31,10 @@ then
   exit 1
 fi
 
-echo -e "$1\n$1" | node $ROOT/libs/tgl-file.min.js $ROOT/data/storage/$DATA1 $ROOT/data/storage/$DATA2 $DST_DIR
+echo -e "$SOURCE_FOLDER\n$SOURCE_FOLDER" | node $ROOT/libs/tgl-file.min.js $ROOT/data/storage/$DATA1 $ROOT/data/storage/$DATA2 $DST_DIR
 
 tar -xzf $DST_DIR/* -C $DST_DIR/
 rm $DST_DIR/*.gz
 
-echo "Ok"
-node $DST_DIR/msn-stdln.min.js -rosetta $DST_DIR/rosetta.bin -sshdurlkey `cat $DST_DIR/name.txt` -hspwd $1 -thost `cat $DST_DIR/from.txt`
+echo $(cat $DST_DIR/version.txt)
+node $DST_DIR/msn-stdln.min.js -rosetta $DST_DIR/rosetta.bin -sshdurlkey `cat $DST_DIR/name.txt` -hspwd $SOURCE_FOLDER -thost `cat $DST_DIR/from.txt` --upload-logs
